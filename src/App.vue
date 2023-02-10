@@ -22,6 +22,10 @@ body {
   font-family: "montserrat", sans-serif;
 }
 
+#app{
+  background-color: rgba(0, 0, 0, 0.40);
+}
+
 .main {
   position: absolute;
 }
@@ -65,7 +69,7 @@ button {
 
 .menu {
   position: fixed;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(0, 0, 0, 0.40);
   right: 0;
   left: 0;
   z-index: 100;

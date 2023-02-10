@@ -1,3 +1,11 @@
+// get запить на  ip адресу місце знаходження
+export const getIPAdress = async() =>{
+  const IpAdress = await fetch(
+    `http://ip-api.com/json`
+  );
+  return IpAdress.json();
+}
+
 // get запитм на погоду
 const api_base = "https://api.openweathermap.org/data/2.5/";
 const api_key = "49cc8c821cd2aff9af04c9f98c36eb74";
@@ -15,7 +23,7 @@ export const getWeatherData = async (lat, lon) => {
   // https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=metric`
   //  https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=metric
   const weatherData = await fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${api_key}&units=metric`
+    `${api_base}onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${api_key}&units=metric`
   );
   return weatherData.json();
 };
@@ -31,10 +39,3 @@ export const getSearchResultes = async (searchCity) => {
   return result.json();
 };
 
-// get запить на  ip адресу місце знаходження
-export const getIPAdress = async() =>{
-  const IpAdress = await fetch(
-    `http://ip-api.com/json`
-  );
-  return IpAdress.json();
-}

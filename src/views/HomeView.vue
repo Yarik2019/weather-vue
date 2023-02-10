@@ -7,7 +7,7 @@
         <div class="search-box">
           <div>
             <input type="text" class="search-bar" autocomplete="off" v-model="queryCity" @keypress="PressQueryhhWeather"
-              @input="fetchCity" @focus="modalFocus = true" placeholder="Search....">
+              @input="fetchCity(queryCity)" @focus="modalFocus = true" placeholder="Search....">
             <div class="block-autocomplete" v-if="modalFocus">
               <ul>
                 <li class="list-country" v-for="city in citys" :key="city.id" @click="setCountry(city.text)">{{
@@ -20,14 +20,16 @@
         </div>
 
         <error-message :error="errorMessage" v-if="errorMessage" />
-        <card-weather :weather="weather" v-else />
-        <graph-line :weatherDate="weatherDate.hourly" />
+        <div v-else>
+          <card-weather :weather="weather" />
+          <graph-line :weatherDate="weatherDate.hourly" />
 
-        <div class="dayOfWeek">
-          <day-card :weatherDate="weatherDate.daily" />
-        </div>
-        <div class="map-block">
-          <Map  :lat="lat" :lon="lon"/>
+          <div class="dayOfWeek">
+            <day-card :weatherDate="weatherDate.daily" />
+          </div>
+          <div class="map-block">
+            <Map :lat="lat" :lon="lon" />
+          </div>
         </div>
       </div>
     </div>
@@ -38,7 +40,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { getWeater, getWeatherData, getSearchResultes, getIPAdress } from '@/ipa/ipa';
+import { getIPAdress, getWeater, getWeatherData, getSearchResultes } from '@/ipa/ipa';
 import { CurrentDateAndTime, HourlyWeatherShift } from '@/data/date';
 import LoadingVue from '@/components/Loading';
 // import QueryAutocomplete from '@/components/QueryAutocomplete'
@@ -59,7 +61,7 @@ export default {
       weather: null,
       weatherDate: null,
       isDay: true,
-      queryCity: "London",
+      queryCity: 'London',
       errorMessage: '',
       lat: null,
       lon: null
@@ -67,44 +69,59 @@ export default {
   },
   components: {
     LoadingVue,
-    // QueryAutocomplete,
     errorMessage,
     CardWeather,
     graphLine,
     dayCard,
     Map
   },
+  mounted() {
+    // console.log(this.queryCity)
+    this.fetchIpAdress();
+    console.log(this.queryCity);
+
+    this.fetchhWeather(this.queryCity);
+
+    this.fetchCity(this.queryCity);
+  },
   methods: {
     ...mapActions(['ADD_CARD_WEATHER']),
+
+    // ip адреса
+    fetchIpAdress() {
+      setTimeout(async () => {
+        try {
+          const data = await getIPAdress();
+          this.queryCity = data.city;
+        } catch (error) {
+          this.errorMessage = error;
+        }
+      }, 300);
+      return;
+    },
+
     setCountry(query) {
       this.queryCity = query;
       this.modalFocus = false;
-      this.fetchhWeather();
+      this.fetchhWeather(this.queryCity);
     },
 
     addCard() {
       this.ADD_CARD_WEATHER(this.weather);
-      localStorage.setItem("weatherData", JSON.stringify(this.weather));
     },
 
     PressQueryhhWeather(event) {
       if (event.key == "Enter") {
-        this.fetchhWeather();
+        this.fetchhWeather(this.queryCity);
         this.modalFocus = false;
       }
     },
-     // ip адреса
-    fetchIpAdress(){
-      setTimeout(async ()=>{
-        const data = await getIPAdress();
-        this.queryCity = data.city
-      })
-    },
+
     // запить на  міста світу автокомпліт
-    fetchCity() {
+    fetchCity(city) {
       setTimeout(async () => {
         try {
-          const data = await getSearchResultes(this.queryCity);
+          const data = await getSearchResultes(city);
           this.citys = data.features;
         } catch (error) {
           this.errorMessage = error;
@@ -112,10 +129,10 @@ export default {
       }, 300);
     },
     //  запитм на погоду
-    fetchhWeather() {
+    fetchhWeather(city) {
       setTimeout(async () => {
         try {
-          const data = await getWeater(this.queryCity);
+          const data = await getWeater(city);
           this.loading = true;
 
           this.weather = data;
@@ -140,6 +157,7 @@ export default {
         this.isDay = true;
       }
     },
+
     //запитм на погоду дні тижнів та графіка
     fetchWeatherData(lat, lon) {
       setTimeout(async () => {
@@ -156,12 +174,6 @@ export default {
       }, 300);
     },
   },
-  mounted() {
-    this.fetchIpAdress();
-    this.fetchhWeather();
-   
-    this.fetchCity();
-  },
 }
 </script>
 <style>
@@ -173,7 +185,7 @@ export default {
   position: relative;
 }
 
-.bg-color{
+.bg-color {
   background-color: rgba(0, 0, 0, 0.40);
 }
 
@@ -240,7 +252,7 @@ export default {
   justify-content: space-between;
 }
 
-.map-block{
+.map-block {
   padding-bottom: 20px;
 }
 </style>
