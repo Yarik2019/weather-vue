@@ -19,9 +19,9 @@
           <button class="add-card" @click="addCard()"><img src="../assets/add-white.png" alt=""></button>
         </div>
 
-        <error-message :error="errorMessage" v-if="errorMessage" />
+        <!-- <error-message :error="errorMessage" v-if="errorMessage" /> -->
 
-        <card-weather :weather="weather" v-else />
+        <card-weather :weather="weather" />
         <graph-line :weatherDate="weatherDate.hourly" />
 
         <div class="dayOfWeek">
