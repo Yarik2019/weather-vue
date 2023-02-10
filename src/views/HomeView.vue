@@ -34,8 +34,6 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -80,9 +78,9 @@ export default {
     this.fetchIpAdress();
     console.log(this.queryCity);
 
-    this.fetchhWeather(this.queryCity);
+    this.fetchhWeather();
 
-    this.fetchCity(this.queryCity);
+    this.fetchCity();
   },
   methods: {
     ...mapActions(['ADD_CARD_WEATHER']),
@@ -103,7 +101,7 @@ export default {
     setCountry(query) {
       this.queryCity = query;
       this.modalFocus = false;
-      this.fetchhWeather(this.queryCity);
+      this.fetchhWeather();
     },
 
     addCard() {
@@ -112,16 +110,16 @@ export default {
 
     PressQueryhhWeather(event) {
       if (event.key == "Enter") {
-        this.fetchhWeather(this.queryCity);
+        this.fetchhWeather();
         this.modalFocus = false;
       }
     },
 
     // запить на  міста світу автокомпліт
-    fetchCity(city) {
+    fetchCity() {
       setTimeout(async () => {
         try {
-          const data = await getSearchResultes(city);
+          const data = await getSearchResultes(this.queryCity);
           this.citys = data.features;
         } catch (error) {
           this.errorMessage = error;
@@ -129,10 +127,10 @@ export default {
       }, 300);
     },
     //  запитм на погоду
-    fetchhWeather(city) {
+    fetchhWeather() {
       setTimeout(async () => {
         try {
-          const data = await getWeater(city);
+          const data = await getWeater(this.queryCity);
           this.loading = true;
 
           this.weather = data;
