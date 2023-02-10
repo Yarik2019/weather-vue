@@ -8,8 +8,8 @@ app.use(store);
 app.use(router);
 app.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyBea65xicuAhWz8oVHvEn6_Rlg8h9nr_EU',
+        key: 'AIzaSyDp3Ud3SixagW8bJOwtosy5bBMB5JRNS_k',
     },
 })
-// AIzaSyBea65xicuAhWz8oVHvEn6_Rlg8h9nr_EU  AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg
+// AIzaSyBea65xicuAhWz8oVHvEn6_Rlg8h9nr_EU  AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg  AIzaSyDp3Ud3SixagW8bJOwtosy5bBMB5JRNS_k
 app.mount('#app');
