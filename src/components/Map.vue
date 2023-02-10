@@ -1,6 +1,6 @@
 <template>
     <div>
-        <GMapMap :center="{ lat: lat, lng: lon }" :zoom="10" map-type-id="terrain" class="map">
+        <GMapMap :center="{ lat: lat, lng: lon }" :zoom="12" map-type-id="terrain" class="map">
         </GMapMap>
    </div>
 </template>
