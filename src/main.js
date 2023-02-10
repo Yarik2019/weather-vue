@@ -8,7 +8,8 @@ app.use(store);
 app.use(router);
 app.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg',
+        key: 'AIzaSyBea65xicuAhWz8oVHvEn6_Rlg8h9nr_EU',
     },
 })
+// AIzaSyBea65xicuAhWz8oVHvEn6_Rlg8h9nr_EU  AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg
 app.mount('#app');
