@@ -26,7 +26,6 @@
         </div>
 
         <!-- <error-message :error="errorMessage" v-if="errorMessage" /> -->
-        {{queryCity}}
         <card-weather :weather="weather" />
         <graph-line :weatherDate="weatherDate.hourly" />
 
