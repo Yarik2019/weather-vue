@@ -7,7 +7,7 @@
         <div class="search-box">
           <div>
             <input type="text" class="search-bar" autocomplete="off" v-model="queryCity" @keypress="PressQueryhhWeather"
-              @input="fetchCity(queryCity)" @focus="modalFocus = true" placeholder="Search....">
+              @input="fetchCity" @focus="modalFocus = true" placeholder="Search....">
             <div class="block-autocomplete" v-if="modalFocus">
               <ul>
                 <li class="list-country" v-for="city in citys" :key="city.id" @click="setCountry(city.text)">{{
@@ -27,13 +27,15 @@
           <div class="dayOfWeek">
             <day-card :weatherDate="weatherDate.daily" />
           </div>
-          <div class="map-block">
-            <Map :lat="lat" :lon="lon" />
-          </div>
+        </div>
+        <div class="map-block">
+          <Map :lat="lat" :lon="lon" />
         </div>
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -41,7 +43,6 @@ import { mapActions } from 'vuex';
 import { getIPAdress, getWeater, getWeatherData, getSearchResultes } from '@/ipa/ipa';
 import { CurrentDateAndTime, HourlyWeatherShift } from '@/data/date';
 import LoadingVue from '@/components/Loading';
-// import QueryAutocomplete from '@/components/QueryAutocomplete'
 import errorMessage from '@/components/errorMessage';
 import CardWeather from '@/components/CardWeather';
 import graphLine from '@/components/graphLine.vue';
@@ -59,7 +60,7 @@ export default {
       weather: null,
       weatherDate: null,
       isDay: true,
-      queryCity: 'London',
+      queryCity: "London",
       errorMessage: '',
       lat: null,
       lon: null
@@ -73,31 +74,8 @@ export default {
     dayCard,
     Map
   },
-  mounted() {
-    // console.log(this.queryCity)
-    this.fetchIpAdress();
-    console.log(this.queryCity);
-
-    this.fetchhWeather();
-
-    this.fetchCity();
-  },
   methods: {
     ...mapActions(['ADD_CARD_WEATHER']),
-
-    // ip адреса
-    fetchIpAdress() {
-      setTimeout(async () => {
-        try {
-          const data = await getIPAdress();
-          this.queryCity = data.city;
-        } catch (error) {
-          this.errorMessage = error;
-        }
-      }, 300);
-      return;
-    },
-
     setCountry(query) {
       this.queryCity = query;
       this.modalFocus = false;
@@ -106,6 +84,7 @@ export default {
 
     addCard() {
       this.ADD_CARD_WEATHER(this.weather);
+      localStorage.setItem("weatherData", JSON.stringify(this.weather));
     },
 
     PressQueryhhWeather(event) {
@@ -113,6 +92,20 @@ export default {
         this.fetchhWeather();
         this.modalFocus = false;
       }
+    },
+
+    // ip адреса
+    fetchIpAdress() {
+      setTimeout(async () => {
+        try {
+          const data = await getIPAdress();
+
+          this.queryCity = data.city;
+          console.log(this.queryCity)
+        } catch (error) {
+          this.errorMessage = error;
+        }
+      }, 300);
     },
 
     // запить на  міста світу автокомпліт
@@ -171,6 +164,13 @@ export default {
         }
       }, 300);
     },
+  },
+  mounted() {
+    this.fetchIpAdress();
+
+    this.fetchhWeather();
+
+    this.fetchCity();
   },
 }
 </script>
