@@ -12,7 +12,7 @@ const api_key = "49cc8c821cd2aff9af04c9f98c36eb74";
 
 export const getWeater = async (city) => {
   const response = await fetch(
-    `${api_base}/weather?q=${city}&units=metric&appid=7efa332cf48aeb9d2d391a51027f1a71`
+    `${api_base}/weather?q=${city}&units=metric&appid=${api_key}`
   );
   return response.json();
 };
