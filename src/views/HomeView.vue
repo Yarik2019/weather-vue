@@ -6,8 +6,14 @@
       <div class="container" v-else>
         <div class="search-box">
           <div>
-            <input type="text" class="search-bar" autocomplete="off" v-model="queryCity" @keypress="PressQueryhhWeather"
-              @input="fetchCity" @focus="modalFocus = true" placeholder="Search....">
+            <input type="text" 
+              class="search-bar" 
+              autocomplete="off" 
+              v-model="queryCity" 
+              @keypress="PressQueryhhWeather"
+              @input="fetchCity" 
+              @focus="modalFocus = true" 
+              placeholder="Search....">
             <div class="block-autocomplete" v-if="modalFocus">
               <ul>
                 <li class="list-country" v-for="city in citys" :key="city.id" @click="setCountry(city.text)">{{
@@ -119,6 +125,7 @@ export default {
         }
       }, 300);
     },
+
     //  запитм на погоду
     fetchhWeather() {
       setTimeout(async () => {
@@ -165,6 +172,7 @@ export default {
       }, 300);
     },
   },
+  
   mounted() {
     this.fetchIpAdress();
 
