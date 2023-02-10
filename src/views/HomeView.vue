@@ -43,7 +43,7 @@ import { mapActions } from 'vuex';
 import { getIPAdress, getWeater, getWeatherData, getSearchResultes } from '@/ipa/ipa';
 import { CurrentDateAndTime, HourlyWeatherShift } from '@/data/date';
 import LoadingVue from '@/components/Loading';
-import errorMessage from '@/components/errorMessage';
+// import errorMessage from '@/components/errorMessage';
 import CardWeather from '@/components/CardWeather';
 import graphLine from '@/components/graphLine.vue';
 import dayCard from '@/components/dayCard.vue';
@@ -68,7 +68,7 @@ export default {
   },
   components: {
     LoadingVue,
-    errorMessage,
+    // errorMessage,
     CardWeather,
     graphLine,
     dayCard,

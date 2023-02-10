@@ -10,8 +10,7 @@ export default {
     name: 'ErrorMessage',
     props: {
         error: {
-            type: String,
-            required: true
+            type: String
         }
     }
 }
