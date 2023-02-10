@@ -20,14 +20,14 @@
         </div>
 
         <error-message :error="errorMessage" v-if="errorMessage" />
-        <div v-else>
-          <card-weather :weather="weather" />
-          <graph-line :weatherDate="weatherDate.hourly" />
 
-          <div class="dayOfWeek">
-            <day-card :weatherDate="weatherDate.daily" />
-          </div>
+        <card-weather :weather="weather" v-else />
+        <graph-line :weatherDate="weatherDate.hourly" />
+
+        <div class="dayOfWeek">
+          <day-card :weatherDate="weatherDate.daily" />
         </div>
+
         <div class="map-block">
           <Map :lat="lat" :lon="lon" />
         </div>
