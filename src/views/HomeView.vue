@@ -26,7 +26,7 @@
         </div>
 
         <!-- <error-message :error="errorMessage" v-if="errorMessage" /> -->
-
+        {{queryCity}}
         <card-weather :weather="weather" />
         <graph-line :weatherDate="weatherDate.hourly" />
 
@@ -40,8 +40,6 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -66,7 +64,7 @@ export default {
       weather: null,
       weatherDate: null,
       isDay: true,
-      queryCity: "London",
+      queryCity: "Kyiv",
       errorMessage: '',
       lat: null,
       lon: null
@@ -105,9 +103,7 @@ export default {
       setTimeout(async () => {
         try {
           const data = await getIPAdress();
-
           this.queryCity = data.city;
-          console.log(this.queryCity)
         } catch (error) {
           this.errorMessage = error;
         }
@@ -175,7 +171,7 @@ export default {
   
   mounted() {
     this.fetchIpAdress();
-
+     console.log(this.fetchIpAdress())
     this.fetchhWeather();
 
     this.fetchCity();
