@@ -11,7 +11,7 @@
               autocomplete="off" 
               v-model="queryCity" 
               @keypress="PressQueryhhWeather"
-              @input="fetchCity" 
+              @input="fetchCity(queryCity)" 
               @focus="modalFocus = true" 
               placeholder="Search....">
             <div class="block-autocomplete" v-if="modalFocus">
@@ -63,7 +63,7 @@ export default {
       weather: null,
       weatherDate: null,
       isDay: true,
-      queryCity: "Kyiv",
+      queryCity: "London",
       errorMessage: '',
       lat: null,
       lon: null
@@ -82,7 +82,7 @@ export default {
     setCountry(query) {
       this.queryCity = query;
       this.modalFocus = false;
-      this.fetchhWeather();
+      this.fetchhWeather(this.queryCity);
     },
 
     addCard() {
@@ -92,7 +92,7 @@ export default {
 
     PressQueryhhWeather(event) {
       if (event.key == "Enter") {
-        this.fetchhWeather();
+        this.fetchhWeather(this.queryCity);
         this.modalFocus = false;
       }
     },
@@ -102,6 +102,8 @@ export default {
       setTimeout(async () => {
         try {
           const data = await getIPAdress();
+          this.fetchCity(data.city)
+          this.fetchhWeather(data.city)
           this.queryCity = data.city;
         } catch (error) {
           this.errorMessage = error;
@@ -110,10 +112,10 @@ export default {
     },
 
     // запить на  міста світу автокомпліт
-    fetchCity() {
+    fetchCity(city) {
       setTimeout(async () => {
         try {
-          const data = await getSearchResultes(this.queryCity);
+          const data = await getSearchResultes(city);
           this.citys = data.features;
         } catch (error) {
           this.errorMessage = error;
@@ -122,10 +124,10 @@ export default {
     },
 
     //  запитм на погоду
-    fetchhWeather() {
+    fetchhWeather(city) {
       setTimeout(async () => {
         try {
-          const data = await getWeater(this.queryCity);
+          const data = await getWeater(city);
           this.loading = true;
 
           this.weather = data;
@@ -170,10 +172,6 @@ export default {
   
   mounted() {
     this.fetchIpAdress();
-     console.log(this.fetchIpAdress())
-    this.fetchhWeather();
-
-    this.fetchCity();
   },
 }
 </script>

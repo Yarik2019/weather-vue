@@ -27,18 +27,18 @@
             </p>
             <p class="day-temp">night: {{ Math.round(day.temp.night) }} °C</p>
         </div>
-
-
     </div>
 </template>
 
 <script>
 export default {
     name: 'dayCard',
-    props: {weatherDate:{
-      type: Array,
-      default: () => [],
-    }},
+    props: {
+        weatherDate: {
+            type: Array,
+            default: () => [],
+        }
+    },
 }
 </script>
 <style>
